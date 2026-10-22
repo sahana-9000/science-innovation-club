@@ -1,0 +1,258 @@
+.galaxy-page {
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.galaxy-header {
+  min-height: 82px;
+  padding: 16px 7.2%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.galaxy-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  font: 800 12px var(--display);
+  letter-spacing: 0.5px;
+}
+
+.galaxy-brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #cdd8dc;
+  border-radius: 50%;
+  color: var(--blue);
+}
+
+.galaxy-ampersand {
+  color: var(--blue);
+}
+
+.galaxy-brand small {
+  display: block;
+  margin-top: 5px;
+  color: #73808a;
+  font: 9px var(--mono);
+  letter-spacing: 0.5px;
+}
+
+.galaxy-back-link,
+.galaxy-explorer-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.galaxy-back-link:hover,
+.galaxy-explorer-footer a:hover,
+.galaxy-footer a:hover {
+  color: var(--blue);
+}
+
+.galaxy-intro {
+  padding: 65px 10% 35px;
+}
+
+.galaxy-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #74828b;
+  font: 10px var(--mono);
+  letter-spacing: 1px;
+}
+
+.galaxy-live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5aa883;
+}
+
+.galaxy-intro h1 {
+  margin: 25px 0 15px;
+  font: 600 clamp(40px, 6vw, 70px)/1.1 var(--display);
+  letter-spacing: -2.5px;
+}
+
+.galaxy-intro h1 em {
+  color: var(--blue);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+.galaxy-intro > p {
+  max-width: 590px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.galaxy-caption {
+  margin-top: 25px;
+  color: #78858c;
+  font: 9px var(--mono);
+  letter-spacing: 0.8px;
+}
+
+.galaxy-explorer-section {
+  padding: 0 7.2% 55px;
+}
+
+.galaxy-viewer {
+  position: relative;
+  width: 100%;
+  height: min(72vh, 760px);
+  min-height: 440px;
+  overflow: hidden;
+  background: #080d19;
+  border: 1px solid #dfe5e5;
+}
+
+.galaxy-viewer:fullscreen {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  background: #080d19;
+}
+
+.galaxy-viewer-toolbar {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.galaxy-viewer-toolbar > span,
+.galaxy-viewer-toolbar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #172b3ae8;
+  color: white;
+  font: 10px var(--mono);
+  letter-spacing: 0.4px;
+}
+
+.galaxy-viewer-toolbar button {
+  border: 1px solid #ffffff30;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.galaxy-viewer-toolbar button:hover {
+  background: var(--blue);
+}
+
+.galaxy-iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #080d19;
+}
+
+.galaxy-explorer-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 20px;
+  padding-top: 18px;
+}
+
+.galaxy-explorer-footer p {
+  max-width: 520px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.galaxy-explorer-footer a {
+  flex-shrink: 0;
+  color: var(--blue);
+}
+
+.galaxy-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 25px 7.2%;
+  border-top: 1px solid var(--line);
+  color: #78858c;
+  font: 9px var(--mono);
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 600px) {
+  .galaxy-header {
+    padding: 14px 5%;
+  }
+
+  .galaxy-brand {
+    font-size: 10px;
+  }
+
+  .galaxy-brand-mark {
+    width: 36px;
+    height: 36px;
+  }
+
+  .galaxy-back-link {
+    font-size: 11px;
+  }
+
+  .galaxy-intro {
+    padding: 48px 7% 28px;
+  }
+
+  .galaxy-intro h1 {
+    letter-spacing: -1.5px;
+  }
+
+  .galaxy-explorer-section {
+    padding: 0 4% 35px;
+  }
+
+  .galaxy-viewer {
+    height: 68vh;
+    min-height: 380px;
+  }
+
+  .galaxy-viewer-toolbar > span,
+  .galaxy-viewer-toolbar button {
+    padding: 9px;
+    font-size: 9px;
+  }
+
+  .galaxy-explorer-footer,
+  .galaxy-footer {
+    flex-direction: column;
+    align-items: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galaxy-page * {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}
