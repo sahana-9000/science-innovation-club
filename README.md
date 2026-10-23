@@ -1,32 +1,29 @@
-# React + TypeScript + Vite
+# Science & Innovation Club
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Vite site prepared for Cloudflare Workers Static Assets. The hourly Worker task
+checks NASA JPL, ESA, NSF, and arXiv RSS feeds. The site displays headlines and
+short summaries with links to the original publisher.
 
-Currently, two official plugins are available:
+## Publish on Cloudflare
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Push the updated project files to the GitHub repository's `main` branch.
+2. Sign in to Cloudflare and open **Workers & Pages**.
+3. Choose **Create application** → **Workers** → **Import a repository**, then
+   connect GitHub and select `science-innovation-club`.
+4. Set the build command to `npm run build` and the deploy command to
+   `npx wrangler deploy`. Keep the project root as `/`.
+5. After the first deploy, open the Worker **Settings** → **Bindings** and add a
+   **Workers KV** binding named `NEWS_CACHE`. Create a namespace for it, save,
+   and redeploy. The app can fetch feeds without KV, but KV lets the hourly
+   scheduled refresh save the latest results for visitors.
+6. Open the Worker URL shown by Cloudflare. The scheduled refresh runs hourly;
+   the first visit also loads the latest feeds immediately.
 
-## React Compiler
+Cloudflare Workers Builds will redeploy the site when new commits are pushed to
+`main`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Local preview
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Run `npm install`, then `npm run dev`. The `/api/news` endpoint is provided by
+the deployed Cloudflare Worker, so the local Vite preview does not include the
+live feed unless the Worker is run locally with Wrangler.
