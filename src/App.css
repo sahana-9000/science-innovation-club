@@ -654,6 +654,14 @@ main {
   line-height: 1.85;
 }
 
+.story-card > p.story-source {
+  min-height: 0;
+  margin-top: 10px;
+  color: #78858b;
+  font: 9px var(--mono);
+  letter-spacing: .4px;
+}
+
 .story-footer {
   display: flex;
   align-items: center;

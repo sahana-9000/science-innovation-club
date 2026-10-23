@@ -21,38 +21,27 @@ import {
 } from "lucide-react";
 import "./App.css";
 
-const stories = [
-  {
-    category: "SPACE",
-    time: "5 MIN READ",
-    title: "The universe is stranger than we imagined",
-    description:
-      "From distant galaxies to mysterious cosmic signals, every discovery opens a new question.",
-    tag: "ASTRONOMY",
-    symbol: "✳",
-    color: "lavender",
-  },
-  {
-    category: "INNOVATION",
-    time: "4 MIN READ",
-    title: "Small ideas can build a different future",
-    description:
-      "Meet the experimental technologies helping students turn curiosity into working prototypes.",
-    tag: "ENGINEERING",
-    symbol: "⌘",
-    color: "mint",
-  },
-  {
-    category: "ARTIFICIAL INTELLIGENCE",
-    time: "6 MIN READ",
-    title: "Can machines learn to think more efficiently?",
-    description:
-      "Researchers are exploring compact AI models that can work directly on everyday devices.",
-    tag: "COMPUTING",
-    symbol: "◈",
-    color: "peach",
-  },
-];
+type NewsStory = {
+  id: string;
+  category: string;
+  source: string;
+  title: string;
+  description: string;
+  url: string;
+  publishedAt: string | null;
+  tag: string;
+};
+
+const storySymbols: Record<string, string> = {
+  SPACE: "✳",
+  INNOVATION: "⌘",
+  "ARTIFICIAL INTELLIGENCE": "◈",
+};
+const storyColors: Record<string, string> = {
+  SPACE: "lavender",
+  INNOVATION: "mint",
+  "ARTIFICIAL INTELLIGENCE": "peach",
+};
 
 const projects = [
   {
@@ -89,6 +78,8 @@ const topics = [
 ];
 
 function HomePage() {
+  const [stories, setStories] = useState<NewsStory[]>([]);
+  const [newsStatus, setNewsStatus] = useState("Loading the latest stories…");
   const [activeCategory, setActiveCategory] = useState("ALL");
   const [liked, setLiked] = useState<number[]>([]);
   const [saved, setSaved] = useState<number[]>([]);
@@ -97,6 +88,20 @@ function HomePage() {
   const [message, setMessage] = useState("");
 
   const categories = ["ALL", "SPACE", "INNOVATION", "ARTIFICIAL INTELLIGENCE"];
+
+  useEffect(() => {
+    fetch("/api/news")
+      .then((response) => {
+        if (!response.ok) throw new Error("News is temporarily unavailable.");
+        return response.json();
+      })
+      .then((data: { items?: NewsStory[] }) => {
+        const latest = data.items ?? [];
+        setStories(latest);
+        setNewsStatus(latest.length ? "News sources checked automatically every hour." : "No recent stories were returned by the sources.");
+      })
+      .catch(() => setNewsStatus("Could not load the news right now. Please try again shortly."));
+  }, []);
 
   const filteredStories =
     activeCategory === "ALL"
@@ -290,22 +295,26 @@ function HomePage() {
             const originalIndex = stories.indexOf(story);
             const isLiked = liked.includes(originalIndex);
             const isSaved = saved.includes(originalIndex);
+            const storyDate = story.publishedAt
+              ? new Date(story.publishedAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" }).toUpperCase()
+              : "LATEST";
 
             return (
-              <article className="story-card" key={story.title}>
-                <div className={`story-art ${story.color}`}>
+              <article className="story-card" key={story.id || story.url}>
+                <div className={`story-art ${storyColors[story.category] ?? "lavender"}`}>
                   <span className="story-art-index">SIC / 0{originalIndex + 1}</span>
-                  <span className="story-symbol">{story.symbol}</span>
+                  <span className="story-symbol">{storySymbols[story.category] ?? "✦"}</span>
                   <span className="story-art-tag">{story.tag}</span>
                   <span className="story-orbit story-orbit-a" />
                   <span className="story-orbit story-orbit-b" />
                 </div>
                 <div className="story-meta">
                   <span>{story.category}</span>
-                  <span>{story.time}</span>
+                  <span>{storyDate}</span>
                 </div>
                 <h3>{story.title}</h3>
                 <p>{story.description}</p>
+                <p className="story-source">SOURCE · {story.source}</p>
                 <div className="story-footer">
                   <button
                     className={isLiked ? "story-action action-on" : "story-action"}
@@ -323,21 +332,22 @@ function HomePage() {
                     <Bookmark size={16} fill={isSaved ? "currentColor" : "none"} />
                     <span>{isSaved ? "Saved" : "Save"}</span>
                   </button>
-                  <button
+                  <a
                     className="story-open"
-                    aria-label={`Explore ${story.title}`}
-                    onClick={() => setMessage("Story detail pages will be added in the next stage.")}
+                    aria-label={`Read ${story.title} at ${story.source}`}
+                    href={story.url}
+                    target="_blank"
+                    rel="noreferrer"
                   >
                     <ArrowUpRight size={18} />
-                  </button>
+                  </a>
                 </div>
               </article>
             );
           })}
         </div>
         <p className="sample-note">
-          Preview stories are illustrative examples, not verified news articles.
-          Real sourced news and comments will be added in a later stage.
+          {newsStatus} Headlines link to the original publishers. Their articles and research remain the property of their sources.
         </p>
       </section>
 
