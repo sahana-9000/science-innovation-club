@@ -147,8 +147,8 @@ function HomePage() {
           <a href="#stories" onClick={() => setMobileMenu(false)}>The feed</a>
           <a href="#projects" onClick={() => setMobileMenu(false)}>Our world</a>
           <a href="#topics" onClick={() => setMobileMenu(false)}>Explore</a>
-          <a href="/galaxy" onClick={() => setMobileMenu(false)}>Galaxy</a>
-          <a href="/lab" onClick={() => setMobileMenu(false)}>Virtual Lab</a>
+          <a href={`${import.meta.env.BASE_URL}#/galaxy`} onClick={() => setMobileMenu(false)}>Galaxy</a>
+          <a href={`${import.meta.env.BASE_URL}#/lab`} onClick={() => setMobileMenu(false)}>Virtual Lab</a>
           <a className="nav-join" href="#join" onClick={() => setMobileMenu(false)}>
             Join the curious <ArrowUpRight size={16} />
           </a>
@@ -474,13 +474,13 @@ function HomePage() {
 }
 
 function App() {
-  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  const path = window.location.hash.replace(/^#\/?/, "").replace(/\/+$/, "");
 
-  if (path === "/galaxy") {
+  if (path === "galaxy") {
     return <GalaxyPage />;
   }
 
-  if (path === "/lab") {
+  if (path === "lab") {
     return <LabPage />;
   }
 
