@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProximityText from "./components/ProximityText";
 import GalaxyPage from "./components/GalaxyPage";
 import LabPage from "./components/LabPage";
@@ -474,7 +474,18 @@ function HomePage() {
 }
 
 function App() {
-  const path = window.location.hash.replace(/^#\/?/, "").replace(/\/+$/, "");
+  const [path, setPath] = useState(() =>
+    window.location.hash.replace(/^#\/?/, "").replace(/\/+$/, ""),
+  );
+
+  useEffect(() => {
+    const syncPath = () => {
+      setPath(window.location.hash.replace(/^#\/?/, "").replace(/\/+$/, ""));
+    };
+
+    window.addEventListener("hashchange", syncPath);
+    return () => window.removeEventListener("hashchange", syncPath);
+  }, []);
 
   if (path === "galaxy") {
     return <GalaxyPage />;
