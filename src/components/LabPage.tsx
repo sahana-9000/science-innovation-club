@@ -296,7 +296,7 @@ const current =
   return (
     <main className="lab-page">
       <header className="lab-header">
-        <a className="lab-back-link" href="/">
+        <a className="lab-back-link" href={import.meta.env.BASE_URL}>
           <span aria-hidden="true">←</span> Club home
         </a>
 
