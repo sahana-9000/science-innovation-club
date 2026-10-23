@@ -39,7 +39,7 @@ export default function GalaxyPage() {
   return (
     <main className="galaxy-page">
       <header className="galaxy-header">
-        <a className="galaxy-brand" href="/" aria-label="Back to club homepage">
+        <a className="galaxy-brand" href={import.meta.env.BASE_URL} aria-label="Back to club homepage">
           <span className="galaxy-brand-mark">
             <Orbit size={24} />
           </span>
@@ -49,7 +49,7 @@ export default function GalaxyPage() {
           </span>
         </a>
 
-        <a className="galaxy-back-link" href="/">
+        <a className="galaxy-back-link" href={import.meta.env.BASE_URL}>
           <ArrowLeft size={16} />
           Back to the club
         </a>
@@ -124,7 +124,7 @@ export default function GalaxyPage() {
       </section>
 
       <footer className="galaxy-footer">
-        <a href="/">← Return to Science & Innovation Club</a>
+        <a href={import.meta.env.BASE_URL}>← Return to Science & Innovation Club</a>
         <span>STAY CURIOUS. KEEP LOOKING UP.</span>
       </footer>
     </main>
